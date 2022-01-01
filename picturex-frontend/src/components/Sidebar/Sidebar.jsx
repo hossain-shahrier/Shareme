@@ -1,4 +1,12 @@
-import { Container, isActiveStyle, isNotActiveStyle } from "./Sidebar.styles";
+import {
+  Container,
+  Wrapper,
+  Logo,
+  SidebarHome,
+  DiscoverText,
+  isActiveStyle,
+  isNotActiveStyle,
+} from "./Sidebar.styles";
 import { NavLink, Link } from "react-router-dom";
 import { RiHomeFill } from "react-icons/ri";
 // import { IoIosArrowForward } from "react-icons/io";
@@ -9,6 +17,7 @@ const categories = [
   { name: "Photography" },
   { name: "Gaming" },
   { name: "Coding" },
+  { name: "Others" },
 ];
 const Sidebar = ({ user, closeToggle }) => {
   const handleCloseSidebar = () => {
@@ -16,15 +25,15 @@ const Sidebar = ({ user, closeToggle }) => {
   };
   return (
     <Container className="flex flex-col justify-between bg-white h-full overflow-y-scroll min-w-210 hide-scrollbar">
-      <div className="flex flex-col">
+      <Wrapper className="flex flex-col">
         <Link
           to="/"
           className="flex px-5 gap-2 my-6 pt-1 w-190 items-center"
           onClick={handleCloseSidebar}
         >
-          <img src={logo} alt="logo" className="w-full" />
+          <Logo src={logo} alt="logo" className="w-full" />
         </Link>
-        <div className="flex flex-col gap-5">
+        <SidebarHome className="flex flex-col gap-5">
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -35,9 +44,9 @@ const Sidebar = ({ user, closeToggle }) => {
             <RiHomeFill />
             Home
           </NavLink>
-          <h3 className="mt-2 px-5 text-base 2xl:text-xl ">
+          <DiscoverText className="mt-2 px-5 text-base 2xl:text-xl ">
             Discover categories
-          </h3>
+          </DiscoverText>
           {categories.slice(0, categories.length - 1).map((category) => {
             return (
               <NavLink
@@ -52,8 +61,8 @@ const Sidebar = ({ user, closeToggle }) => {
               </NavLink>
             );
           })}
-        </div>
-      </div>
+        </SidebarHome>
+      </Wrapper>
     </Container>
   );
 };
