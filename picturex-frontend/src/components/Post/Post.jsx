@@ -19,7 +19,6 @@ const Post = ({ post }) => {
     (item) => item.postedBy._id === user.googleId
   );
   alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
-
   const savePost = (id) => {
     if (alreadySaved?.length === 0) {
       setSavingPost(true);
@@ -42,6 +41,9 @@ const Post = ({ post }) => {
           setSavingPost(false);
         });
     }
+  };
+  const deletePost = (id) => {
+    client.delete(id).then(window.location.reload());
   };
   return (
     <Container className="m-2">
@@ -98,9 +100,47 @@ const Post = ({ post }) => {
                 </button>
               )}
             </div>
+            <div className="flex justify-between items-center gap-2 w-full">
+              {destination && (
+                <a
+                  href={destination}
+                  target="_blank"
+                  className="bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md"
+                  rel="noreferrer"
+                >
+                  <BsFillArrowUpRightCircleFill />
+                  {destination.length > 20
+                    ? destination.slice(8, 20)
+                    : destination(8)}
+                </a>
+              )}
+              {postedBy?._id === user.googleId && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deletePost(_id);
+                  }}
+                  className="bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none"
+                >
+                  <AiTwotoneDelete />
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>
+      <Link
+        to={`user-profile/${postedBy?._id}`}
+        className="flex gap-2 mt-2 items-center"
+      >
+        <img
+          className="w-8 h-8 rounded-full object-cover"
+          src={postedBy?.image}
+          alt="user-profile"
+        />
+        <span className="font-semibold capitalize">{postedBy?.username}</span>
+      </Link>
     </Container>
   );
 };
