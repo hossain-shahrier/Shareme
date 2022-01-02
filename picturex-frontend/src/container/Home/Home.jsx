@@ -21,15 +21,13 @@ import Posts from "../Posts/Posts";
 // Client
 import { client } from "../../client";
 import Logo from "../../assets/logo.png";
+import { fetchUser } from "../../utils/fetchUser";
 const Home = () => {
   const [user, setUser] = useState(null);
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const scrollRef = useRef(null);
   // User Info
-  const userInfo =
-    localStorage.getItem("user") !== "undefined"
-      ? JSON.parse(localStorage.getItem("user"))
-      : localStorage.clear();
+  const userInfo = fetchUser();
   useEffect(() => {
     const query = userQuery(userInfo.googleId);
     client.fetch(query).then((data) => {
