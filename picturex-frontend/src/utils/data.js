@@ -72,28 +72,28 @@ export const userQuery = (userId) => {
 };
 // Specific Post
 export const searchQuery = (searchTerm) => {
-  const query = `*[_type=="post" && title match '${searchTerm}* || category match '${searchTerm}* || about match '${searchTerm}*']{
-    image{
-      asset ->{
-        url
-      }
-    },
-      _id,
-      destination,
-      postedBy->{
-        _id,
-        username,
-        image
-      },
-      save[]{
-        _key,
-        postedBy->{
-          _id,
-          username,
-          image
+  const query = `*[_type == "post" && title match '${searchTerm}*' || category match '${searchTerm}*' || about match '${searchTerm}*']{
+        image{
+          asset->{
+            url
+          }
         },
-      },
-  }`;
+            _id,
+            destination,
+            postedBy->{
+              _id,
+              userName,
+              image
+            },
+            save[]{
+              _key,
+              postedBy->{
+                _id,
+                userName,
+                image
+              },
+            },
+          }`;
   return query;
 };
 

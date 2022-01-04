@@ -11,8 +11,8 @@ const Feed = () => {
   const [posts, setPosts] = useState();
   const { categoryId } = useParams();
   useEffect(() => {
-    setLoading(true);
     if (categoryId) {
+      setLoading(true);
       const query = searchQuery(categoryId);
       client
         .fetch(query)
@@ -24,6 +24,7 @@ const Feed = () => {
           console.log(err);
         });
     } else {
+      setLoading(true);
       client
         .fetch(feedQuery)
         .then((data) => {
@@ -35,9 +36,12 @@ const Feed = () => {
         });
     }
   }, [categoryId]);
-
+  const ideaName = categoryId || "new";
   if (loading)
-    return <Spinner message="We are adding new ideas to your feed" />;
+    return (
+      <Spinner message={`We are adding ${ideaName} ideas to your feed!`} />
+    );
+  if (!posts?.length) return <h2>No posts available</h2>;
   return <Container>{posts && <MasonryLayout posts={posts} />}</Container>;
 };
 
