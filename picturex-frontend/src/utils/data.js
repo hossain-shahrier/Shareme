@@ -182,3 +182,53 @@ export const postDetailMorePostQuery = (post) => {
   }`;
   return query;
 };
+
+export const userCreatedPostsQuery = (userId) => {
+  const query = `*[ _type == 'post' && userId == '${userId}'] | order(_createdAt desc){
+    image{
+      asset->{
+        url
+      }
+    },
+    _id,
+    destination,
+    postedBy->{
+      _id,
+      username,
+      image
+    },
+    save[]{
+      postedBy->{
+        _id,
+        username,
+        image
+      },
+    },
+  }`;
+  return query;
+};
+
+export const userSavedPostsQuery = (userId) => {
+  const query = `*[_type == 'post' && '${userId}' in save[].userId ] | order(_createdAt desc) {
+    image{
+      asset->{
+        url
+      }
+    },
+    _id,
+    destination,
+    postedBy->{
+      _id,
+      username,
+      image
+    },
+    save[]{
+      postedBy->{
+        _id,
+        username,
+        image
+      },
+    },
+  }`;
+  return query;
+};

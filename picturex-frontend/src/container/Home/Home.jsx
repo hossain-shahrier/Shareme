@@ -25,6 +25,7 @@ import { fetchUser } from "../../utils/fetchUser";
 const Home = () => {
   const [user, setUser] = useState(null);
   const [toggleSidebar, setToggleSidebar] = useState(false);
+
   const scrollRef = useRef(null);
   // User Info
   const userInfo = fetchUser();
@@ -36,7 +37,9 @@ const Home = () => {
   }, [userInfo.googleId]);
   useEffect(() => {
     scrollRef.current.scrollTo(0, 0);
+
   }, []);
+
   return (
     <Container className="flex bg-gray-50 md:flex-row flex-col h-screen transaction-height duration-75 ease-out">
       <CustomSidebar className="hidden md:flex h-screen flex-initial">
