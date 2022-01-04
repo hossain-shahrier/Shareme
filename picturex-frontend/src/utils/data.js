@@ -120,3 +120,65 @@ export const feedQuery = `*[_type == 'post']| order(_createdAt desc) {
       },
     },
 }`;
+export const postDetailQuery = (postId) => {
+  const query = `*[_type == "post" && _id == '${postId}']{
+    image{
+      asset->{
+        url
+      }
+    },
+    _id,
+    title, 
+    about,
+    category,
+    destination,
+    postedBy->{
+      _id,
+      username,
+      image
+    },
+   save[]{
+      postedBy->{
+        _id,
+        username,
+        image
+      },
+    },
+    comments[]{
+      comment,
+      _key,
+      postedBy->{
+        _id,
+        username,
+        image
+      },
+    }
+  }`;
+  return query;
+};
+
+export const postDetailMorePostQuery = (post) => {
+  const query = `*[_type == "post" && category == '${post.category}' && _id != '${post._id}' ]{
+    image{
+      asset->{
+        url
+      }
+    },
+    _id,
+    destination,
+    postedBy->{
+      _id,
+      username,
+      image
+    },
+    save[]{
+      _key,
+      postedBy->{
+        _id,
+        username,
+        image
+      },
+    },
+  }`;
+  return query;
+};

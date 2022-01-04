@@ -170,6 +170,7 @@ const CreatePost = ({ user }) => {
                   <option
                     className="text-base border-0 outline-none capitalize bg-white text-black"
                     value={category.name}
+                    key={category.name}
                   >
                     {category.name}
                   </option>
